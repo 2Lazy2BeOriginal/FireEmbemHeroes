@@ -8,7 +8,7 @@ from PIL import Image
 adb = Client(host='127.0.0.1', port=5037)
 devices = adb.devices()
 
-Completed_levels = 18
+Completed_levels = 33
 
 # exit out of there is no device detected
 if len(devices) == 0:
@@ -168,7 +168,7 @@ def stage_clear():
     time.sleep(3)
     # when you unlock a character and the animation takes forever
     # chapter 1 lvl 5 book 2 and 3
-    if Completed_levels == 48 or Completed_levels == 98 or Completed_levels == 163:
+    if Completed_levels == 53 or Completed_levels == 98 or Completed_levels == 203:
         print("waiting for unlocking character animation to finish")
         time.sleep(4)
         tap()
@@ -247,36 +247,32 @@ def play_everything():
     global Completed_levels
     # do book 1, chapter 10-5 is stupidly hard so lets give up. 45 levels in total
     if Completed_levels < 48:
-        play_what_chapters(9)
+        play_what_chapters(9, Completed_levels)
     change_book()
     # do book 2 chapter 11-5 is hard. 60 lvls in total
-    if Completed_levels < 108:
+    if Completed_levels < 93:
         # make sure we do not include previous books. each book always has 5 levels so we multiply
         # by how many chapters completed
-        Completed_levels -= 9 * 5
-        play_what_chapters(10)
+        play_what_chapters(10, Completed_levels - 9 * 5)
     change_book()
     # do book 3
-    if Completed_levels < 163:
-        Completed_levels -= 19 * 5
-        play_what_chapters(11)
+    if Completed_levels < 143:
+        play_what_chapters(11, Completed_levels - 19 * 5)
     change_book()
     # do book 4
-    if Completed_levels < 223:
-        Completed_levels -= 30 * 5
-        play_what_chapters(10)
+    if Completed_levels < 198:
+        play_what_chapters(10, Completed_levels - 30 * 5)
     change_book()
     # do book 5
-    if Completed_levels < 283:
-        Completed_levels -= 40 * 5
-        play_what_chapters(10)
+    if Completed_levels < 248:
+        play_what_chapters(10, Completed_levels - 40 * 5)
     change_book()
     finish_book(2)
 
-def play_what_chapters(max):
+def play_what_chapters(max, book_progress):
     # total levels completed that isn't the tutorial
     # 14 2 chap 4 levels
-    x = Completed_levels - 3
+    x = book_progress - 3
     # finding how many books has been completed
     chapters_done = math.ceil(x/5)
     # finding how many levels has been done

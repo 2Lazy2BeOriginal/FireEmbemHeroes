@@ -1,0 +1,69 @@
+While its running:
+	While the program is running, you will notice some text being printed out that says "took screenshot..." and "stage complete"
+	The reason why is that the program is not "that" well programed and there are times where you encounter infinite loops and
+	I'll show you the best way of dealing with it
+
+If it says
+	took screenshot becausefinding game over
+	took screenshot becausefinding stage clear
+but autoplay isn't enabled... Then simply manually "select autoplay" and the bot will run normally.
+
+Also if you are in the game over screen and the same thing happens. Go through the game over screen
+and the autoplay and the game will pick up from where it started. (MAKE SURE IT DOES NOT SAY GAMEOVER
+DETECTED)
+
+Now if the program breaks out of the pattern, than simply wait for it to enter the
+    took screenshot becausefinding game over
+	took screenshot becausefinding stage clear
+loop and then select the level manually than click autoplay.
+
+THe program does an infinite loop until it detects a "stage clear" just be careful since it automatically
+assumes that if it finds a skip button than the level must've completed.
+
+Be aware that it goes from
+    finding game over
+    finding stage clear
+    finding skip button
+    finding ...
+and the program takes 8 seconds to finish one loop. As in you should click "fight" when it says finding ...
+and hit skip once it pops up to make sure you don't run into problems
+
+
+If there is clearly any of the following is on screen:
+    "skip button"
+    "any green button"
+    "game over screen"
+    "stage clear screen"
+and the console is printing "took screenshot being finding...".
+    -Then you will have to adjust the color values the program uses. Simply go to a image color selecting website (such as https://imagecolorpicker.com/en) and then
+    upload the "screen.png" file and use the color picker at
+
+    -When you upload the image and select a point on screen. There will be a section that says
+    RGB(r value, g value, b value)
+    -Then depending on the problem you want to adjust the numbers inside the
+    is_valid_color() functions to + or - 20 the original number.
+    -For example if it said RGB(100,125,150)..
+    change it to is_valid_color(x,80,120,115,145,130,170)
+     do not touch the letter that is at the first comma. It will throw an error
+
+
+    Note: 20 is an arbitrary number but it gives enough variance while also being specific enough
+    Note: for the game over, you want to give it 5 cycles before troubleshooting due to the nature of it.
+
+    Green button:
+        -"the halfway point" on the x axis and a green button
+        -go to the find_green() function and change the values inside
+    skip button:
+        -the top right corner and pick the dark red value.
+        -go to the find_skip() function and change the values inside
+    game over screen:
+        -the halfway point of the height. and the dark red value on the G
+        -go to the did_game_over() and change there
+    stage clear screen:
+        -tha halfway point of the width and move down and pick the dark yellow point. DO NOT PICK WHITE
+        AS IT OCCURS MANY TIMES IN THE PROGRAM
+        -go to the did_stage_clear() and change there
+
+If you encounter an error in the tutorial part. Just finish the tutorial and then set Completed_levels to 3
+and return to the main hub and click run again.
+If you encounter any issues, don't be afraid to dm 2Lazy2BeOriginal#4095 on discord for troubleshooting

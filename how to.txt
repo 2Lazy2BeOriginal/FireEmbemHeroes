@@ -1,0 +1,68 @@
+This program is based off my android device (galaxy S5) and there might be some issues with other deivces
+Only run this program when you are inside the Fire Emblem Heroes app as this program uses the touch screen
+
+Please message 2Lazy2BeOriginal#4095 and I'll see what issues there are
+
+Setting up the Android
+	1. Go to your android phone and enter settings, then scroll all the way down to "About Phone" 
+	see if you can find anywhere mentioning "build model"
+	2. Click the build model a few times until it says to "enable developer mode" click yes
+	3. Head back to settings and look for a section called "Developer mode" inside there will be an
+	option for "USB debugging" enable it.
+	4. Plug the phone to your laptop/monitor. via USB, (usb C do not work for some reason)
+
+Setting up the laptop
+	1. Click the link at https://developer.android.com/studio/releases/platform-tools and download
+	the appropiate platform (Mine is Windows)
+	2. Once clicked, extract that file and then go to into the file and then right click and there
+	should be an option that says "Open in Terminal"
+	3. Once you click that, copy and paste ./adb devices and your phone should get a notification if you
+	want to connect it or not. Click accept
+	4. It should display "List of devices" with a random number and "device" if not than repeat step 6-8
+	5. To test it out, try "./adb shell input touchscreen swipe 500 500 1000 2000" in the terminal and
+	the phone  should scroll up.
+
+Optional: 
+	Scroll down to the download section if this page https://github.com/Genymobile/scrcpy
+	Extract the file and open the scrpy file. It should work automatically
+
+Python part:
+	1. install python and pycharm to your laptop
+	ignore:
+        2. Go to the search bar and type command prompt and open the file, then type
+            "pip install pure-python-adb"
+            "pip install numpy"
+            "pip install mss"
+	2. Open the python file and tap the search bar on the top right, enter "python packages". click it and
+	there will be a search bar and simply type "ppadb-uiautomator". Then there should be a install button
+	somewhere.
+	3. repeat step 2 for "Pillow" and "numpy"
+	4. On the top right corner, it will say "No Interpreter" you want to click that and click "edit configs"
+	5. You want to click the "Python Interpreter" drop menu and then select the newest verison "Python 10"
+	as of this date
+
+
+Preperation:
+	1. Get past the tutorial and finish downloading the additional files. I'm too lazy to implement a way to wait 
+	for it to finish all the way
+	2. Head into settings and make sure that the options ensure the fastest time. Photos are attached on what the 
+	option screen should look like — click the "misc" button, than settings and match the screen
+	3. Head back to the main menu of the game and go through the daily login in bonus and all that. 
+
+Assuming all goes to plan, you can click the green arrow on the top right and watch the magic do its work
+
+While its running:
+	While the program is running, you will notice some text being printed out that says "took screenshot..." and "stage complete" 
+	The reason why is that the program is not "that" well programed and there are times where you encounter infinite loops and 
+	I'll show you the best way of dealing with it
+
+
+If you are planning on using the program again, you must repeat step 2-5 at the "setting up your laptop"
+to turn on the automation app
+
+If the program has some glitches or throws an error. It will throw an error with a message indicating how
+many levels you have completed. Scroll up to the Completed_levels = ... and replace ... with the number the
+program throws at you.
+YOU MUST RETURN TO BOOK 1 AND LEAVE THE STORY MODE SECTION (simply click MISC in the bottom right to reset)
+
+	

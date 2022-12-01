@@ -16,29 +16,26 @@ Setting up the laptop
 	the appropiate platform (Mine is Windows)
 	2. Once clicked, extract that file and then go to into the file and then right click and there
 	should be an option that says "Open in Terminal"
-	3. Once you click that, copy and paste ./adb devices and your phone should get a notification if you
+	3. Once you click that, copy and paste "./adb devices" and your phone should get a notification if you
 	want to connect it or not. Click accept
 	4. It should display "List of devices" with a random number and "device" if not than repeat step 6-8
 	5. To test it out, try "./adb shell input touchscreen swipe 500 500 1000 2000" in the terminal and
 	the phone  should scroll up.
 
-Optional: 
-	Scroll down to the download section if this page https://github.com/Genymobile/scrcpy
-	Extract the file and open the scrpy file. It should work automatically
 
 Python part:
 	1. install python and pycharm to your laptop
 	ignore:
-        2. Go to the search bar and type command prompt and open the file, then type
-            "pip install pure-python-adb"
-            "pip install numpy"
-            "pip install mss"
-    3. Open pycharm and create a new project, from this project you want to copy and paste, the "main.py"
-    contents
-	2. tap the search bar on the top right, enter "python packages". click it and
+        	2. Go to the search bar and type command prompt and open the file, then type
+            	"pip install pure-python-adb"
+            	"pip install numpy"
+            	"pip install mss"
+    	2. Open pycharm and create a new project, from this project you want to copy and paste, the "main.py"
+    	contents
+	3. tap the search bar on the top right, enter "python packages". click it and
 	there will be a search bar and simply type "ppadb-uiautomator". Then there should be a install button
 	somewhere.
-	3. repeat step 2 for "Pillow" and "numpy"
+	4. repeat step 3 for "Pillow" and "numpy"
 
 
 Preperation:

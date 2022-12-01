@@ -8,7 +8,7 @@ from PIL import Image
 adb = Client(host='127.0.0.1', port=5037)
 devices = adb.devices()
 
-Completed_levels = 33
+Completed_levels = 42
 
 # exit out of there is no device detected
 if len(devices) == 0:
@@ -43,7 +43,9 @@ def find_dimentions():
     screen = get_screenshot("to get screensize")
     return len(screen[0]), len(screen)
 
+
 W, H = find_dimentions()
+
 
 # checks if the rgb colors are within an acceptable range. Its highly unlikely different colors
 # are gonna be implemented in this game
@@ -51,7 +53,7 @@ def is_valid_color(x, r_min, r_max, g_min, g_max, b_min, b_max):
     return r_min <= x[0] <= r_max and g_min <= x[1] <= g_max and b_min <= x[2] <= b_max
 
 
-# from the main menu, open the story mode
+# from the main menu, open the story mode and "Main Story"
 def open_story():
     tap(W / 6, H * (20 / 21))
     tap(W * (3 / 8), H / 2)
@@ -61,19 +63,19 @@ def open_story():
 # click the autoplay and wait for it to finish
 def play_level():
     tap(W * (7 / 9), H * (20 / 21))
-    find_green("finding autoplay")
+    find_green("finding autoplay btn")
 
 
 # taps on screen, if we don't care about position we can just do tap()
 def tap(x=W / 2, y=H / 2):
     device.shell(f'input tap {int(x)} {int(y)}')
-    # device.shell('input tap ' + str(x) + ' ' + str(y))
+
 
 # drags the screen for a short amount of time.
 def drag(x1,y1,x2 = None,y2 = None):
-    if x2 == None:
+    if x2 is None:
         x2 = x1
-    if y2 == None:
+    if y2 is None:
         y2 = y1
     device.shell(f'input touchscreen swipe {int(x1)} {int(y1)} {int(x2)} {int(y2)} 200')
 
@@ -86,7 +88,7 @@ def start_lvl():
     #out_of_stamina()
     time.sleep(0.75)
     find_green("to refill stamina (if any)")
-    time.sleep(0.75)
+    time.sleep(1)
     find_green()
 
 
@@ -153,7 +155,6 @@ def did_stage_clear():
     return False
 
 
-
 # clicks the screen and goes over the reward section. sometimes theres 1-3 things to click but
 # nothing happens if it doesn't see any so who cares
 def stage_clear():
@@ -208,16 +209,6 @@ def start_chapter():
     tap(W/2, H * (9/23))
 
 
-def out_of_stamina():
-    global Completed_levels
-    if Completed_levels == 5:
-        time.sleep(1)
-        find_green("refill stamina")
-        pass
-    else:
-        return
-
-
 # this block of code completes one chapter at a time
 def repeat_chapter(n):
     for i in range(n):
@@ -245,11 +236,11 @@ def finish_book(chapters):
 # all the books have the same format, so we can plug them to this function
 def play_everything():
     global Completed_levels
-    # do book 1, chapter 10-5 is stupidly hard so lets give up. 45 levels in total
+    # do book 1; chapter 10-5 is stupidly hard so lets give up. 45 levels in total
     if Completed_levels < 48:
         play_what_chapters(9, Completed_levels)
     change_book()
-    # do book 2 chapter 11-5 is hard. 60 lvls in total
+    # do book 2; chapter 11-5 is hard so skip chapter 11
     if Completed_levels < 93:
         # make sure we do not include previous books. each book always has 5 levels so we multiply
         # by how many chapters completed
@@ -267,11 +258,13 @@ def play_everything():
     if Completed_levels < 248:
         play_what_chapters(10, Completed_levels - 40 * 5)
     change_book()
-    finish_book(2)
+    print("Bot completed every level. Program terminating, have a nice day")
+    quit()
 
-def play_what_chapters(max, book_progress):
+
+# basically we do n amount of chapters per book this tells us how many chapters are left
+def play_what_chapters(n, book_progress):
     # total levels completed that isn't the tutorial
-    # 14 2 chap 4 levels
     x = book_progress - 3
     # finding how many books has been completed
     chapters_done = math.ceil(x/5)
@@ -279,7 +272,7 @@ def play_what_chapters(max, book_progress):
     levels_done = x % 5
     # means we finished a chapter and have to start one
     print(chapters_done, levels_done)
-    if levels_done == 0:
+    if levels_done != 0:
         # copy and paste of finish chapter
         start_chapter()
         # finish the remaining levels in that chapter
@@ -288,29 +281,15 @@ def play_what_chapters(max, book_progress):
         time.sleep(2)
         print("chapter done, picking next one")
     # finish the rest of the book
-    finish_book(max - chapters_done)
+    finish_book(n - chapters_done)
 
-
-def remaining_levels():
-    global Completed_levels
-    x = Completed_levels
-    x -= 3
-    y = x % 5
-    if y == 0:
-        y = 5
-    # copy and paste of finish chapter
-    start_chapter()
-    repeat_chapter(y)
-    # take in account loading new chapters takes some time
-    time.sleep(2)
-    print("chapter done, picking next one")
 
 def tutorial():
     # level 1
     find_skip()
     find_green()
     find_skip()
-    drag(100,H * (14/23),W * (5/12),H * (14/23))
+    drag(100, H * (14/23), W * (5/12), H * (14/23))
     time.sleep(1.5)
     find_skip()
     drag(W * (6/13), H * (14 / 23), W * (10 / 13), H * (12 / 23))
@@ -384,7 +363,7 @@ def main():
         print("opened prologue")
         start_chapter()
         time.sleep(1)
-        # prologue has some stupid shit
+        # prologue has some stupid pop ups
         tutorial2()
     # start playing the rest of the book since the steps will be identical basically
     play_everything()
@@ -396,4 +375,4 @@ if __name__ == '__main__':
         main()
     except:
         raise Exception("You have completed " + str(Completed_levels) + " levels. PLease change Completed_levels")
-    pass
+

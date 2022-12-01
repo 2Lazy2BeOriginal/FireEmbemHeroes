@@ -59,9 +59,16 @@ While its running:
 If you are planning on using the program again, you must repeat step 2-5 at the "setting up your laptop"
 to turn on the automation app
 
+
 If the program has some glitches or throws an error. It will throw an error with a message indicating how
 many levels you have completed. Scroll up to the Completed_levels = ... and replace ... with the number the
 program throws at you.
+
+Check if the Completed_levels ends at a 3 or 8, if it does than a chapter is about to start (no in between chapters). if it isn't simply 
+count how much more it is from a 3 or 8 and see if the screen matches that. 
+	ex: it says 25. so you should have completed part 3 and about to beat part 4. if it doesn't say that than something has gone 
+	wrong and don't trust the program
+
 YOU MUST RETURN TO BOOK 1 AND LEAVE THE STORY MODE SECTION (simply click MISC in the bottom right to reset)
 
 	

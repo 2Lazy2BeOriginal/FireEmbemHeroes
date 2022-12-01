@@ -33,13 +33,12 @@ Python part:
             "pip install pure-python-adb"
             "pip install numpy"
             "pip install mss"
-	2. Open the python file and tap the search bar on the top right, enter "python packages". click it and
+    3. Open pycharm and create a new project, from this project you want to copy and paste, the "main.py"
+    contents
+	2. tap the search bar on the top right, enter "python packages". click it and
 	there will be a search bar and simply type "ppadb-uiautomator". Then there should be a install button
 	somewhere.
 	3. repeat step 2 for "Pillow" and "numpy"
-	4. On the top right corner, it will say "No Interpreter" you want to click that and click "edit configs"
-	5. You want to click the "Python Interpreter" drop menu and then select the newest verison "Python 10"
-	as of this date
 
 
 Preperation:

@@ -8,7 +8,21 @@ from PIL import Image
 adb = Client(host='127.0.0.1', port=5037)
 devices = adb.devices()
 
-Completed_levels = 0
+#bookNum = 0
+#ChapterNum = 0
+#LevelNum = 1
+
+bookNum = 2
+ChapterNum = 1
+LevelNum = 1
+Completed_levels = 47
+
+BOOK_1_LENGTH = 9
+BOOK_2_LENGTH = 10
+BOOK_3_LENGTH = 11
+BOOK_4_LENGTH = 10
+BOOK_5_LENGTH = 10
+
 
 # exit out of there is no device detected
 if len(devices) == 0:
@@ -36,6 +50,7 @@ def get_screenshot(reason= ""):
     # got a corrupted image so try again essentially.
     except (IOError, SyntaxError, TypeError):
         return get_screenshot()
+
     return i
 
 # take a screenshot and use it to measure the screen size as well as other functions
@@ -169,7 +184,7 @@ def stage_clear():
     time.sleep(3)
     # when you unlock a character and the animation takes forever
     # chapter 1 lvl 5 book 2 and 3
-    if Completed_levels == 53 or Completed_levels == 98 or Completed_levels == 203:
+    if LevelNum == 1 and ChapterNum == 1 and bookNum != 1 and bookNum != 5:
         print("waiting for unlocking character animation to finish")
         time.sleep(4)
         tap()
@@ -211,6 +226,7 @@ def start_chapter():
 
 # this block of code completes one chapter at a time
 def repeat_chapter(n):
+    global LevelNum, ChapterNum
     for i in range(n):
         print("selecting the next level")
         start_lvl()
@@ -222,41 +238,50 @@ def repeat_chapter(n):
         stage_clear()
         # have to consider that there is animation to selecting level before reseting the cycle
         time.sleep(2)
+        LevelNum += 1
 
 # goes through one book with the number of chapters to go by
 def finish_book(chapters):
+    global LevelNum, ChapterNum
     for i in range(chapters):
+        LevelNum = 1
         start_chapter()
         repeat_chapter(5)
         # take in account loading new chapters takes some time
         time.sleep(2)
         print("chapter done, picking next one")
+        ChapterNum += 1
     print("Book done, picking next one")
+
 
 # all the books have the same format, so we can plug them to this function
 def play_everything():
-    global Completed_levels
+    global bookNum, ChapterNum, LevelNum
     # do book 1; chapter 10-5 is stupidly hard so lets give up. 45 levels in total
-    if Completed_levels < 48:
-        play_what_chapters(9, Completed_levels)
+    if bookNum <= 1:
+        print("got here")
+        play_what_chapters(BOOK_1_LENGTH, ChapterNum)
+        bookNum = 2
     change_book()
     # do book 2; chapter 11-5 is hard so skip chapter 11
-    if Completed_levels < 93:
+    if bookNum <= 2:
         # make sure we do not include previous books. each book always has 5 levels so we multiply
         # by how many chapters completed
-        play_what_chapters(10, Completed_levels - 9 * 5)
+        play_what_chapters(BOOK_2_LENGTH, ChapterNum)
+        bookNum = 3
     change_book()
     # do book 3
-    if Completed_levels < 143:
-        play_what_chapters(11, Completed_levels - 19 * 5)
+    if bookNum <= 3:
+        play_what_chapters(BOOK_3_LENGTH, ChapterNum)
+        bookNum = 4
     change_book()
     # do book 4
-    if Completed_levels < 198:
-        play_what_chapters(10, Completed_levels - 30 * 5)
+    if bookNum <= 4:
+        play_what_chapters(BOOK_4_LENGTH, ChapterNum)
+        bookNum = 5
     change_book()
     # do book 5
-    if Completed_levels < 248:
-        play_what_chapters(10, Completed_levels - 40 * 5)
+    play_what_chapters(BOOK_5_LENGTH, ChapterNum)
     change_book()
     print("Bot completed every level. Program terminating, have a nice day")
     quit()
@@ -264,68 +289,17 @@ def play_everything():
 
 # basically we do n amount of chapters per book this tells us how many chapters are left
 def play_what_chapters(n, book_progress):
-    # total levels completed that isn't the tutorial
-    x = book_progress - 3
-    # finding how many books has been completed
-    chapters_done = math.ceil(x/5)
-    # finding how many levels has been done
-    levels_done = x % 5
-    # means we finished a chapter and have to start one
-    print(chapters_done, levels_done)
-    if levels_done != 0:
-        # copy and paste of finish chapter
-        start_chapter()
-        # finish the remaining levels in that chapter
-        repeat_chapter(5 - levels_done)
-        # take in account loading new chapters takes some time
-        time.sleep(2)
-        print("chapter done, picking next one")
-    # finish the rest of the book
-    finish_book(n - chapters_done)
-
-
-def tutorial():
-    # level 1
-    find_skip()
-    find_green()
-    find_skip()
-    drag(100, H * (14/23), W * (5/12), H * (14/23))
-    time.sleep(1.5)
-    find_skip()
-    drag(W * (6/13), H * (14 / 23), W * (10 / 13), H * (12 / 23))
-    time.sleep(3)
-    tap()
-    # stage clear pops up
-    time.sleep(1)
-    tap()
-    find_skip()
+    global ChapterNum, LevelNum
+    # have to consider that range is 1-5
+    start_chapter()
+    repeat_chapter(6 - LevelNum)
     time.sleep(2)
-    # preface 2 screen booted up
-    find_skip()
-    time.sleep(3)
-    find_skip()
-    drag(100, H * (16 / 23), W * (8 / 13), H * (14 / 23))
-    time.sleep(6)
-    find_skip()
-    drag(100, H * (13 / 23), W * (8 / 13), H * (13 / 23))
-    time.sleep(6)
-    tap()
-    time.sleep(7)
-    find_skip()
-    drag(W * (5 / 13), H * (13 / 23), W * (9 / 13), H * (13 / 23))
-    time.sleep(8)
-    tap()
-    # stage clear pop up
-    time.sleep(3)
-    tap()
-    time.sleep(5)
-    find_skip()
-    find_green()
-    # download screen
-    time.sleep(3)
-    find_green()
+    finish_book(n - book_progress)
+    # assuming it reaches here, assume that it has completed a book
+    ChapterNum = 1
+    LevelNum = 1
 
-
+    
 def tutorial2():
     for i in range(3):
         start_lvl()
@@ -355,24 +329,31 @@ def pre_lvl_cutscene():
 
 
 def main():
+    global bookNum, ChapterNum, LevelNum
     print("Fire Emblem begins")
     open_story()
     time.sleep(1)
     # complete tutorial
-    if Completed_levels < 3:
+    if bookNum == 0:
         print("opened prologue")
         start_chapter()
         time.sleep(1)
         # prologue has some stupid pop ups
         tutorial2()
+        # offically done prologue
+        bookNum = 1
+        ChapterNum = 1
+        LevelNum = 1
     # start playing the rest of the book since the steps will be identical basically
     play_everything()
     pass
 
 
 if __name__ == '__main__':
+    print(6 - LevelNum, 9 - ChapterNum)
     try:
         main()
     except:
-        raise Exception("You have completed " + str(Completed_levels) + " levels. PLease change Completed_levels")
-
+        # technically bad practice but we want any error to tell us how many lvls completed
+        raise Exception("You are on book " + str(bookNum) + ", Chapter " + str(ChapterNum) +
+                        ", level " + str(LevelNum) + " Please change the variables")

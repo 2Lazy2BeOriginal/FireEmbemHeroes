@@ -8,7 +8,7 @@ from PIL import Image
 adb = Client(host='127.0.0.1', port=5037)
 devices = adb.devices()
 
-Completed_levels = 42
+Completed_levels = 0
 
 # exit out of there is no device detected
 if len(devices) == 0:

@@ -8,14 +8,10 @@ from PIL import Image
 adb = Client(host='127.0.0.1', port=5037)
 devices = adb.devices()
 
-#bookNum = 0
-#ChapterNum = 0
-#LevelNum = 1
-
-bookNum = 2
-ChapterNum = 1
+bookNum = 0
+ChapterNum = 0
 LevelNum = 1
-Completed_levels = 47
+
 
 BOOK_1_LENGTH = 9
 BOOK_2_LENGTH = 10

@@ -288,7 +288,7 @@ def play_what_chapters(n, book_progress):
     global ChapterNum, LevelNum
     # have to consider that range is 1-5
     start_chapter()
-    repeat_chapter(6 - LevelNum)
+    repeat_chapter(5 - LevelNum - 1)
     time.sleep(2)
     finish_book(n - book_progress)
     # assuming it reaches here, assume that it has completed a book
@@ -346,7 +346,7 @@ def main():
 
 
 if __name__ == '__main__':
-    print(6 - LevelNum, 9 - ChapterNum)
+    print(6 - LevelNum, "levels to play.", 9 - ChapterNum, "chapters left to go. currently on", bookNum)
     try:
         main()
     except:

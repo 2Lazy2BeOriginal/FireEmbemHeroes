@@ -8,10 +8,13 @@ from PIL import Image
 adb = Client(host='127.0.0.1', port=5037)
 devices = adb.devices()
 
-bookNum = 0
-ChapterNum = 0
-LevelNum = 1
+#bookNum = 0
+#ChapterNum = 0
+#LevelNum = 1
 
+bookNum = 2
+ChapterNum = 1
+LevelNum = 2
 
 BOOK_1_LENGTH = 9
 BOOK_2_LENGTH = 10
@@ -27,6 +30,7 @@ if len(devices) == 0:
 
 # Assume that we only attached one device to this thing
 device = devices[0]
+
 
 # gets a screenshot of the moment; reason is just to be easier to debug
 def get_screenshot(reason= ""):
@@ -169,9 +173,6 @@ def did_stage_clear():
 # clicks the screen and goes over the reward section. sometimes theres 1-3 things to click but
 # nothing happens if it doesn't see any so who cares
 def stage_clear():
-    # keeps track of how many levels have been completed
-    global Completed_levels
-    Completed_levels += 1
     print("detected stage is cleared")
     temp = True
     tap()
@@ -180,7 +181,7 @@ def stage_clear():
     time.sleep(3)
     # when you unlock a character and the animation takes forever
     # chapter 1 lvl 5 book 2 and 3
-    if LevelNum == 1 and ChapterNum == 1 and bookNum != 1 and bookNum != 5:
+    if LevelNum == 5 and ChapterNum == 1 and bookNum != 1 and bookNum != 5:
         print("waiting for unlocking character animation to finish")
         time.sleep(4)
         tap()
@@ -211,7 +212,7 @@ def automate_game():
 # annoying that this has a small margin of error
 def change_book():
     y = H * (13/46)
-    x1 = W /2
+    x1 = W / 2
     x2 = W / 6
     drag(x1, y, x2, y)
 
@@ -288,14 +289,56 @@ def play_what_chapters(n, book_progress):
     global ChapterNum, LevelNum
     # have to consider that range is 1-5
     start_chapter()
-    repeat_chapter(5 - LevelNum - 1)
+    repeat_chapter(6 - LevelNum)
     time.sleep(2)
     finish_book(n - book_progress)
     # assuming it reaches here, assume that it has completed a book
     ChapterNum = 1
     LevelNum = 1
 
-    
+
+def tutorial():
+    # level 1
+    find_skip()
+    find_green()
+    find_skip()
+    drag(100, H * (14/23), W * (5/12), H * (14/23))
+    time.sleep(1.5)
+    find_skip()
+    drag(W * (6/13), H * (14 / 23), W * (10 / 13), H * (12 / 23))
+    time.sleep(3)
+    tap()
+    # stage clear pops up
+    time.sleep(1)
+    tap()
+    find_skip()
+    time.sleep(2)
+    # preface 2 screen booted up
+    find_skip()
+    time.sleep(3)
+    find_skip()
+    drag(100, H * (16 / 23), W * (8 / 13), H * (14 / 23))
+    time.sleep(6)
+    find_skip()
+    drag(100, H * (13 / 23), W * (8 / 13), H * (13 / 23))
+    time.sleep(6)
+    tap()
+    time.sleep(7)
+    find_skip()
+    drag(W * (5 / 13), H * (13 / 23), W * (9 / 13), H * (13 / 23))
+    time.sleep(8)
+    tap()
+    # stage clear pop up
+    time.sleep(3)
+    tap()
+    time.sleep(5)
+    find_skip()
+    find_green()
+    # download screen
+    time.sleep(3)
+    find_green()
+
+
 def tutorial2():
     for i in range(3):
         start_lvl()
@@ -346,10 +389,9 @@ def main():
 
 
 if __name__ == '__main__':
-    print(6 - LevelNum, "levels to play.", 9 - ChapterNum, "chapters left to go. currently on", bookNum)
     try:
         main()
     except:
-        # technically bad practice but we want any error to tell us how many lvls completed
+        # technically bad practice but we want any error or exiting to tell us how many lvls completed
         raise Exception("You are on book " + str(bookNum) + ", Chapter " + str(ChapterNum) +
                         ", level " + str(LevelNum) + " Please change the variables")

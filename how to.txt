@@ -16,8 +16,10 @@ Setting up the laptop
 	the appropiate platform (Mine is Windows)
 	2. Once clicked, extract that file and then go to into the file and then right click and there
 	should be an option that says "Open in Terminal"
+	2.5 Go to the microsoft store, and type terminal and download windows terminal. This enables you rightclick and go 	to the terminal. If not using windows than go to 3a
 	3. Once you click that, copy and paste ./adb devices and your phone should get a notification if you
 	want to connect it or not. Click accept
+	3a. go to the searchbar and type terminal, then you wanna change the directory to the folder containing adb with a 	bunch of other folders. Then type ./adb devices
 	4. It should display "List of devices" with a random number and "device" if not than repeat step 6-8
 	5. To test it out, try "./adb shell input touchscreen swipe 500 500 1000 2000" in the terminal and
 	the phone  should scroll up.

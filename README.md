@@ -1,2 +1,62 @@
-# FireEmbemHeroes
-automating the game to get a bunch of mynintendo points
+# FireEmbemHeroes automation
+
+This program is based off my android device (galaxy S5) and there might be some issues with other deivces
+**Only run this program when you are inside the Fire Emblem Heroes app** as this program will control the touchscreen
+
+For any troubleshooting please message 2Lazy2BeOriginal#4095 :) 
+
+## Setting up the Android
+	1. Go to your android phone and enter settings, then scroll all the way down to "About Phone" and search for anything mentioning "build model"
+	2. Click the build model a few times until it says to "enable developer mode" click yes
+	3. Head back to settings and look for a section called "Developer mode" inside there will be an option for "USB debugging" enable it.
+	4. Plug the phone to your laptop/monitor. via USB, (usb C do not work for some reason)
+
+## Setting up the laptop
+	1. Click the link at https://developer.android.com/studio/releases/platform-tools and download
+	the appropiate OS (Mine is Windows)
+	2. Once clicked, extract the folder and then go to into "platform-tools" folder and open the terminal
+	3. copy and paste ./adb devices and your phone should get a notification if you want to connect it or not. Click accept
+	4. It should display "List of devices" with a random number and "device"
+	5. To test it out, try "./adb shell input touchscreen swipe 500 500 1000 2000" in the terminal andthe phone should scroll up.
+
+Optional: 
+	Scroll down to the download section if this page https://github.com/Genymobile/scrcpy
+	Extract the file and open the scrpy file. It should work automatically
+
+## Python part:
+	1. install python and pycharm to your laptop
+	ignore:
+        2. Go to the search bar and type command prompt and open the file, then type
+            "pip install pure-python-adb"
+            "pip install numpy"
+            "pip install mss"
+    3. Open pycharm and create a new project, from this project you want to copy and paste, the "main.py"
+    contents
+	2. tap the search bar on the top right, enter "python packages". click it and
+	there will be a search bar and simply type "ppadb-uiautomator". Then there should be a install button
+	somewhere.
+	3. repeat step 2 for "Pillow" and "numpy"
+
+
+## Before you start the program
+	1. Boot into Fire Emblem Heroes and finish the tutorial and finish downloading the additional files it will ask.
+	2. Head into settings and make sure that the options ensure the fastest time. Photos are attached on what the option screen should look like — click the "misc" button, than settings and match the screen
+	3. Head back to the main menu of the game and go through the daily login in bonus and all that. 
+
+Assuming all goes to plan, you can click the green arrow on the top right and sit back and relaxing
+
+## Some notes about the console messages
+
+	While the program is running, you will notice some text being printed out that says "took screenshot..." and "stage complete" 
+	The reasoning is that the program will relies on using colours on screen to do a certain action. The program follows a predictable cycle it expects from the game. 
+
+
+If you are planning on using the program again, you must repeat step 2-5 at the "setting up your laptop"
+to turn on the automation program. Failure to do so will have the program tell you "no device attached" 
+
+
+If the program has some glitches or throws an error. It will throw an error with a message indicating what
+book, chapter, level you completed Scroll up till you get ..Num and replace ... with the number listed
+program throws at you.
+before you click "run":
+   **YOU MUST RETURN TO BOOK 1**
